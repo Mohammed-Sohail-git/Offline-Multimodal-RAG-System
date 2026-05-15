@@ -1,0 +1,128 @@
+[
+  {
+    "id": "Adithya_Reddy_Resume_1.pdf_text_0_0",
+    "content": "Passionate software developer proficient in Python, Java, C++, and full-stack development. With multiple national level hackathon wins, competitive programming achievements, and hands-on projects in AI, backend, and web applications, I excel in both collaborative team settings and independent problem- solving.",
+    "metadata": {
+      "type": "narrative_text",
+      "source": "Adithya_Reddy_Resume_1.pdf",
+      "original_index": 0,
+      "modality": "text",
+      "has_image_file": false,
+      "chunk_index": 0,
+      "total_chunks": 1
+    },
+    "token_count": 55
+  },
+  {
+    "id": "Adithya_Reddy_Resume_1.pdf_text_1_0",
+    "content": "Bachelor of Engineering in Information Technology, Vasavi College of Engineering CGPA: 8.06 | SGPA (Sem 5): 8.67",
+    "metadata": {
+      "type": "narrative_text",
+      "source": "Adithya_Reddy_Resume_1.pdf",
+      "original_index": 1,
+      "modality": "text",
+      "has_image_file": false,
+      "chunk_index": 0,
+      "total_chunks": 1
+    },
+    "token_count": 31
+  },
+  {
+    "id": "Adithya_Reddy_Resume_1.pdf_text_2_0",
+    "content": "CuraFusion, 2nd Prize - Hackathon by IIT Hyderabad Developed a real-time patient monitoring platform that auto-assigns doctors and delivers AI-based triage support. Utilizing Kafka and REST APIs, we stream patient vitals every five seconds, applied Pathway for alert detection, and integrated the Gemini API to provide AI-generated first-response instructions until the doctor arrives. Tools Used: Python, Kafka, Pathway, Gemini API, REST APIs, Streamlit.",
+    "metadata": {
+      "type": "narrative_text",
+      "source": "Adithya_Reddy_Resume_1.pdf",
+      "original_index": 2,
+      "modality": "text",
+      "has_image_file": false,
+      "chunk_index": 0,
+      "total_chunks": 1
+    },
+    "token_count": 96
+  },
+  {
+    "id": "Adithya_Reddy_Resume_1.pdf_text_3_0",
+    "content": "Power Grid Load Balancing Simulator, 1st Prize - Demux 2.0 Hackathon Built a large-scale simulator to optimize electricity distribution using flow networks and min-cost max- flow algorithms. Modeled dynamic city demands, renewable energy intermittency, and probabilistic line failures to generate cost-efficient dispatch plans with blackout avoidance and overload prevention. Tools Used: Python, NetworkX",
+    "metadata": {
+      "type": "narrative_text",
+      "source": "Adithya_Reddy_Resume_1.pdf",
+      "original_index": 3,
+      "modality": "text",
+      "has_image_file": false,
+      "chunk_index": 0,
+      "total_chunks": 1
+    },
+    "token_count": 76
+  },
+  {
+    "id": "Adithya_Reddy_Resume_1.pdf_text_4_0",
+    "content": "1st Winner Demux 2.0 National Level Hackathon by BVRIT",
+    "metadata": {
+      "type": "narrative_text",
+      "source": "Adithya_Reddy_Resume_1.pdf",
+      "original_index": 4,
+      "modality": "text",
+      "has_image_file": false,
+      "chunk_index": 0,
+      "total_chunks": 1
+    },
+    "token_count": 17
+  },
+  {
+    "id": "Adithya_Reddy_Resume_1.pdf_text_5_0",
+    "content": "2nd Winner - Tinkerer's Lab National Level Hackathon by IIT Hyderabad",
+    "metadata": {
+      "type": "narrative_text",
+      "source": "Adithya_Reddy_Resume_1.pdf",
+      "original_index": 5,
+      "modality": "text",
+      "has_image_file": false,
+      "chunk_index": 0,
+      "total_chunks": 1
+    },
+    "token_count": 17
+  },
+  {
+    "id": "Adithya_Reddy_Resume_1.pdf_text_6_0",
+    "content": "1st Winner - Innovasia National level Hackathon by VCE",
+    "metadata": {
+      "type": "narrative_text",
+      "source": "Adithya_Reddy_Resume_1.pdf",
+      "original_index": 6,
+      "modality": "text",
+      "has_image_file": false,
+      "chunk_index": 0,
+      "total_chunks": 1
+    },
+    "token_count": 13
+  },
+  {
+    "id": "Adithya_Reddy_Resume_1.pdf_text_7_0",
+    "content": "Elite+Gold in NPTEL Python Programming by IIT Ropar",
+    "metadata": {
+      "type": "narrative_text",
+      "source": "Adithya_Reddy_Resume_1.pdf",
+      "original_index": 7,
+      "modality": "text",
+      "has_image_file": false,
+      "chunk_index": 0,
+      "total_chunks": 1
+    },
+    "token_count": 14
+  },
+  {
+    "id": "Adithya_Reddy_Resume_1.pdf_text_8_0",
+    "content": "Programming Languages: Python, Java, C++ Web Development: HTML, CSS, JavaScript, Flask, Streamlit, REST APIs AI & ML Tools: Gemini API, Pathway Other Tools: Kafka, Git, Version Control",
+    "metadata": {
+      "type": "narrative_text",
+      "source": "Adithya_Reddy_Resume_1.pdf",
+      "original_index": 8,
+      "modality": "text",
+      "has_image_file": false,
+      "chunk_index": 0,
+      "total_chunks": 1
+    },
+    "token_count": 44
+  }
+]

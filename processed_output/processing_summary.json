@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-04-11T15:04:14.418766",
+  "processing_mode": "parallel",
+  "workers": 9,
+  "total_chunks": 2,
+  "total_tokens": 22,
+  "by_type": {
+    "audio": 2
+  },
+  "by_modality": {
+    "audio": 2
+  },
+  "by_source": {
+    "Data_Types_in_Python__Python_Interview_Preparation_python.mp3": 2
+  },
+  "by_file_type": {
+    "docx": 0,
+    "images": 0,
+    "pdfs": 0,
+    "audio": 2
+  },
+  "chunks_with_images": 0,
+  "cross_modal_enabled": true
+}

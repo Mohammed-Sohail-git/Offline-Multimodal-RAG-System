@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimodal RAG Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #042ad4 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            background: rgb(253, 246, 246);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4463ea 0%, #2c0153 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 0;
+            height: calc(100vh - 150px);
+        }
+
+        .sidebar {
+            background: #e0e1f8;
+            padding: 30px;
+            border-right: 1px solid #dee2e6;
+            overflow-y: auto;
+        }
+
+        .upload-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .file-list {
+            margin: 15px 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            padding: 8px;
+            background: white;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px 0;
+        }
+
+        .btn-primary {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #c82333;
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .chat-area {
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            height: 100%;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #d7ebfe;
+            border-radius: 10px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 80%;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            background: #667eea;
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.assistant {
+            background: white;
+            border: 1px solid #dee2e6;
+        }
+
+        .message-header {
+            font-weight: bold;
+            margin-bottom: 8px;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+
+        .message-content {
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .query-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+
+        .query-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .send-btn:hover:not(:disabled) {
+            background: #764ba2;
+        }
+
+        .send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border: 3px solid rgba(255, 255, 255, .3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .info-box h4 {
+            margin-bottom: 8px;
+            color: #667eea;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Multimodal RAG Chatbot</h1>
+            <p>Upload documents, images, and audio files and chat with AI</p>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="upload-section">
+                    <h3>📁 Upload Files</h3>
+                    <div class="info-box">
+                        <h4>Supported formats:</h4>
+                        <ul>
+                            <li>📄 PDF, DOCX</li>
+                            <li>🖼️ PNG, JPG, GIF</li>
+                            <li>🎵 MP3, WAV, M4A</li>
+                        </ul>
+                    </div>
+
+                    <div class="file-input-wrapper">
+                        <input type="file" id="fileInput" multiple
+                            accept=".pdf,.docx,.doc,.png,.jpg,.jpeg,.gif,.bmp,.mp3,.wav,.m4a,.flac,.ogg">
+                        <label for="fileInput" class="file-input-label">
+                            📂 Choose Files
+                        </label>
+                    </div>
+
+                    <div id="fileList" class="file-list"></div>
+
+                    <button class="btn btn-primary" id="uploadBtn" disabled>
+                        🚀 Process Files
+                    </button>
+
+                    <button class="btn btn-secondary" id="clearBtn">
+                        🗑️ Clear All
+                    </button>
+
+                    <div id="uploadStatus" style="display: none;"></div>
+                </div>
+            </div>
+
+            <div class="chat-area">
+                <div id="messages" class="messages">
+                    <div class="message assistant">
+                        <div class="message-header">🤖 Assistant</div>
+                        <div class="message-content">Welcome! Upload your files to get started. I can answer questions
+                            about PDFs, documents, images, and audio files.</div>
+                    </div>
+                </div>
+
+                <div class="input-area">
+                    <input type="text" id="queryInput" class="query-input" placeholder="Ask a question..." disabled>
+                    <button id="sendBtn" class="send-btn" disabled>Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedFiles = [];
+        let isProcessing = false;
+        let chatbotReady = false;
+
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const queryInput = document.getElementById('queryInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const messages = document.getElementById('messages');
+
+        // File selection
+        fileInput.addEventListener('change', (e) => {
+            selectedFiles = Array.from(e.target.files);
+            updateFileList();
+            uploadBtn.disabled = selectedFiles.length === 0;
+        });
+
+        // Update file list
+        function updateFileList() {
+            if (selectedFiles.length === 0) {
+                fileList.innerHTML = '<div style="color: #666; text-align: center; padding: 10px;">No files selected</div>';
+                return;
+            }
+
+            fileList.innerHTML = selectedFiles.map(file =>
+                `<div class="file-item">📄 ${file.name}</div>`
+            ).join('');
+        }
+
+        // Upload and process
+        uploadBtn.addEventListener('click', async () => {
+            if (selectedFiles.length === 0 || isProcessing) return;
+
+            isProcessing = true;
+            uploadBtn.disabled = true;
+            uploadBtn.innerHTML = '<span class="loading"></span> Processing...';
+            showStatus('Processing files... This may take a moment.', 'info');
+
+            const formData = new FormData();
+            selectedFiles.forEach(file => formData.append('files', file));
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showStatus(data.message, 'success');
+                    chatbotReady = true;
+                    queryInput.disabled = false;
+                    sendBtn.disabled = false;
+                    addMessage('assistant', `✅ Files processed! You can now ask questions.\n\n📊 Processed ${data.total_chunks} chunks in ${data.duration}`);
+                } else {
+                    showStatus(data.error || 'Upload failed', 'error');
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                showStatus('Error: ' + error.message, 'error');
+            } finally {
+                isProcessing = false;
+                uploadBtn.disabled = false;
+                uploadBtn.innerHTML = '🚀 Process Files';
+            }
+        });
+
+        // Clear all
+        clearBtn.addEventListener('click', async () => {
+            if (!confirm('Clear all files and start fresh?')) return;
+
+            try {
+                const response = await fetch('/clear', { method: 'POST' });
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    selectedFiles = [];
+                    updateFileList();
+                    fileInput.value = '';
+                    uploadBtn.disabled = true;
+                    chatbotReady = false;
+                    queryInput.disabled = true;
+                    sendBtn.disabled = true;
+                    messages.innerHTML = `
+                        <div class="message assistant">
+                            <div class="message-header">🤖 Assistant</div>
+                            <div class="message-content">All data cleared. Upload new files to get started.</div>
+                        </div>
+                    `;
+                    showStatus('All data cleared', 'success');
+                }
+            } catch (error) {
+                showStatus('Error: ' + error.message, 'error');
+            }
+        });
+
+        // Send query
+        async function sendQuery() {
+            const query = queryInput.value.trim();
+            if (!query || !chatbotReady || isProcessing) return;
+
+            addMessage('user', query);
+            queryInput.value = '';
+
+            const loadingId = addMessage('assistant', '⏳ Thinking...');
+            isProcessing = true;
+            sendBtn.disabled = true;
+
+            try {
+                const response = await fetch('/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: query })
+                });
+
+                const data = await response.json();
+
+                document.getElementById(loadingId).remove();
+
+                if (response.ok && data.success) {
+                    addMessage('assistant', data.answer);
+                } else {
+                    addMessage('assistant', '❌ Error: ' + (data.error || 'Query failed'));
+                }
+            } catch (error) {
+                document.getElementById(loadingId).remove();
+                addMessage('assistant', '❌ Error: ' + error.message);
+            } finally {
+                isProcessing = false;
+                sendBtn.disabled = false;
+            }
+        }
+
+        sendBtn.addEventListener('click', sendQuery);
+        queryInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendQuery();
+        });
+
+        // Add message
+        function addMessage(sender, content) {
+            const messageId = 'msg-' + Date.now();
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.id = messageId;
+            messageDiv.innerHTML = `
+                <div class="message-header">${sender === 'user' ? '👤 You' : '🤖 Assistant'}</div>
+                <div class="message-content">${content}</div>
+            `;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+            return messageId;
+        }
+
+        // Show status
+        function showStatus(message, type) {
+            uploadStatus.textContent = message;
+            uploadStatus.className = `status ${type}`;
+            uploadStatus.style.display = 'block';
+
+            if (type === 'success') {
+                setTimeout(() => {
+                    uploadStatus.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Initialize
+        updateFileList();
+    </script>
+</body>
+
+</html>

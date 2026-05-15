@@ -1,0 +1,61 @@
+
+# Web Framework
+Flask
+Werkzeug
+
+# Deep Learning & ML
+torch
+torchvision
+torchaudio
+transformers
+sentence-transformers
+
+# Computer Vision
+Pillow
+opencv-python
+pytesseract
+
+
+# Audio Processing
+librosa
+soundfile
+pydub
+faster-whisper
+
+
+
+# Vector Store & Search
+faiss-cpu
+# For GPU: faiss-gpu==1.7.4
+numpy
+scipy
+
+# NLP & Text Processing
+nltk
+spacy
+rank-bm25
+
+# Document Processing
+unstructured
+python-docx
+python-pptx
+openpyxl
+pypdf
+pdf2image
+pdfplumber
+
+# LLM Integration
+ollama
+tiktoken
+kneed
+
+# HTTP & APIs
+requests
+urllib3
+
+# Progress Bars
+tqdm
+
+# Serialization
+# pickle5
+
